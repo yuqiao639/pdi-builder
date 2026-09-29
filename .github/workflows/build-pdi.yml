@@ -19,7 +19,7 @@ jobs:
      - name: Setup Java
        uses: actions/setup-java@v4
        with:
-         distribution: tmurin
+         distribution: temurin
          java-version: 17
 
      - name: Build PDI
