@@ -9,7 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
+     - name: Checkout repository
+       run: 
+         curl -I https://repo.pentaho.com/
      - name: Checkout PDI Source
        uses: actions/checkout@v4
        with:
