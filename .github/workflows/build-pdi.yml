@@ -1,0 +1,48 @@
+name: Build PDI CE
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+     - name: Checkout PDI Source
+       uses: actions/checkout@v4
+       with:
+         repository: pentaho/pentaho-kettle
+         ref: 11.1.0.0-420
+
+     - name: Setup Java
+       uses: actions/setup-java@v4
+       with:
+         distribution: tmurin
+         java-version: 17
+
+     - name: Build PDI
+       run: |
+         mvn clean package - Dmanven.test.skip=true
+
+     - name: Upload Artifact
+       uses: actions/upload-artifact@v4
+       with:
+         name: pdi-ce
+         path: assemblies/client/target/*.zip
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         
