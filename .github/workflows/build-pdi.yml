@@ -9,49 +9,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     - name: Create Maven Settings
+     - name: Check Pentaho Repo
        run: |
-         mkdir -p ~/.m2
+         echo "=== Root Repo ==="
+         curl -I https://repo.pentaho.com/artifactory/pant-mv
 
-         cat > ~/.m2/settings.xml << EOF
-         <settings>
-           <mirrors>
-             <mirror>
-               <id>central</id>
-               <mirrorOf>*</mirrorOf>
-               <url>https://repo.maven.apache.org/maven2</url?
-             </mirror>
-           </mirrors>
-         </settings>
-         EOF
-     - run: mvn clean package
-     
-     - name: Checkout repository
-       run: 
-         curl -I https://repo.pentaho.com/
-     - name: Checkout PDI Source
-       uses: actions/checkout@v4
-       with:
-         repository: pentaho/pentaho-kettle
-         ref: 11.1.0.0-1
+         echo "=== Parent POM ==="
+         curl -I https://repo.pentaho.com/artifactory/pant-mv/org/pentaho/pentaho-ce-jar-parent-pom
 
-     - name: Setup Java
-       uses: actions/setup-java@v4
-       with:
-         distribution: temurin
-         java-version: 17
+         echo "=== Specific Version ==="
+         curl -I https://repo.pentaho.com/artifactory/pant-mv/org/pentaho/pentaho-ce-jar-parent-pom/11.1.0.0-1/
 
-     - name: Build PDI
-       run: |
-         mvn clean package - Dmanven.test.skip=true
-
-     - name: Upload Artifact
-       uses: actions/upload-artifact@v4
-       with:
-         name: pdi-ce
-         path: assemblies/client/target/*.zip
-
-
+         
 
 
 
