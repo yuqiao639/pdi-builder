@@ -9,6 +9,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+     - name: Create Maven Settings
+       run: |
+         mkdir -p ~/.m2
+
+         cat > ~/.m2/settings.xml << EOF
+         <settings>
+           <mirrors>
+             <mirror>
+               <id>central</id>
+               <mirrorOf>*</mirrorOf>
+               <url>https://repo.maven.apache.org/maven2</url?
+             </mirror>
+           </mirrors>
+         </settings>
+         EOF
+     - run: mvn clean package
+     
      - name: Checkout repository
        run: 
          curl -I https://repo.pentaho.com/
